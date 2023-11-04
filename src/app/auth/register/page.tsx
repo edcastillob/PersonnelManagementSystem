@@ -1,10 +1,13 @@
 "use client";
 import { useForm } from "react-hook-form";
 import axios from 'axios';
+import { useRouter } from 'next/navigation'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 const RegisterPage = () => {
+const router = useRouter();
+
   const {
     register,
     handleSubmit,
@@ -14,14 +17,12 @@ const RegisterPage = () => {
   const onSubmit = handleSubmit(async(data) => {
     if (data.password !== data.confirmPassword) {
       toast.warning("Passwords do not match");
-    } else {
-      // try {
+    } else {    
         const userNew = await axios.post('/api/auth/register', data);
-        console.log('respuesta del back: ', userNew.data);
-
-      // } catch (error) {
-      //   throw new Error(error as string);
-      // }
+        console.log('respuesta del back: ', userNew);
+        if(userNew.statusText)router.push('/auth/login');
+        
+   
     }
   });
   return (
