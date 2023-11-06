@@ -4,7 +4,7 @@ import db from "@/libs/db";
 import bcrypt from "bcrypt";
 import { NextResponse } from "next/server";
 
-const authOptions = {
+export const authOptions = {
   providers: [
     CredentialsProvider({
       name: "Credentials",
@@ -54,6 +54,9 @@ const authOptions = {
       },
     }),
   ],
+  pages:{
+    signIn:"/auth/login"
+  },
   secret: process.env.AUTH_SECRET,
 };
 

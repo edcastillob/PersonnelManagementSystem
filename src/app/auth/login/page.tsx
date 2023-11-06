@@ -4,11 +4,9 @@ import axios from "axios";
 import { useRouter } from "next/navigation";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { signIn } from 'next-auth/react';
+import { signIn } from "next-auth/react";
 
 const LoginPage = () => {
-
-
   const router = useRouter();
   const {
     register,
@@ -17,28 +15,27 @@ const LoginPage = () => {
     formState: { errors },
   } = useForm();
 
-  const onSubmit = handleSubmit(async(data) => {
-        
-   const res = await signIn('credentials', {
+  const onSubmit = handleSubmit(async (data) => {
+    const res = await signIn("credentials", {
       email: data.email,
       password: data.password,
-      redirect: false
-    })
-    if (res?.status !== 200){
-      toast.warning("Invalid Credentials");          
-  reset() 
-      return
+      redirect: false,
+    });
+    if (res?.status !== 200) {
+      toast.warning("Invalid Credentials");
+      reset();
+      return;
     } else {
-      reset()
+      reset();
       toast.info(`Welcome ${data.email}`);
-      setTimeout(() => {
-        router.push('/');
-      }, 2000);
-    
+      // setTimeout(() => {
+      //   router.push("/");
+      // }, 2000);
+      router.push("/");
+      router.refresh();
+
     }
 
-  
-    
   });
 
   return (
