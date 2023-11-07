@@ -31,6 +31,27 @@ const router = useRouter();
         <h1 className="text-slate-200 font-bold text-4xl mb-4">
           Register User
         </h1>
+        <label htmlFor="fullname" className="text-slate-500 mb-2 block">
+          Fullname
+        </label>
+        <input
+          type="text"
+          {...register("fullname", {
+            required: {
+              value: true,
+              message: "fullname is required",
+            },
+          })}
+          className="p-3 rounded block mb-2 bg-slate-900 text-slate-300 w-full"
+          placeholder="Fullname User"
+        />
+        {errors.fullname && (
+          <span className="text-red-500  text-xs">
+            {typeof errors.fullname.message === "string"
+              ? errors.fullname.message
+              : "Error occurred"}
+          </span>
+        )}
         <label htmlFor="username" className="text-slate-500 mb-2 block">
           Username
         </label>

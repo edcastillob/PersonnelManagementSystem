@@ -14,7 +14,15 @@ model User {
     id Int @id @default(autoincrement())   
     email String @unique
     username String @unique
+    fullname String  @default("fullname")
     password String
     createdAt DateTime @default(now())
     updatedAt DateTime
   }
+
+  model PasswordReset {
+  id        Int       @id @default(autoincrement())
+  email     String
+  token     String
+  expirationDate DateTime
+}
