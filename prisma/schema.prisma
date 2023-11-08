@@ -20,9 +20,89 @@ model User {
     updatedAt DateTime
   }
 
-  model PasswordReset {
-  id        Int       @id @default(autoincrement())
-  email     String
-  token     String
-  expirationDate DateTime
+// Esquemas para empleados
+
+model Department {
+  id_department  Int      @id @default(autoincrement())
+  name          String
+  employees     Employee[]
+  job_titles    JobTitle[]
+}
+
+
+
+model JobTitle {
+  id_cargo      Int      @id @default(autoincrement())
+  name          String
+  department    Department @relation(fields: [id_department], references: [id_department])
+  id_department Int
+  employees     Employee[]
+}
+
+
+
+
+model Cargo {
+  id_cargo      Int      @id @default(autoincrement())
+  name          String
+ 
+}
+
+
+model Ubication {
+  id_ubication  Int      @id @default(autoincrement())
+  name          String
+  employees     Employee[]
+}
+
+model Employee {
+  id             Int        @id @default(autoincrement())
+  dni            String     @unique
+  name           String
+  fullname       String
+  gender         String
+  birthdate      DateTime
+  civil_status   String
+  photo          String?
+  address        String
+  phone          String
+  email          String @unique
+  department     Department @relation(fields: [id_department], references: [id_department])
+  id_department  Int
+  job_title      JobTitle   @relation(fields: [id_cargo], references: [id_cargo])
+  id_cargo       Int
+  start_date     DateTime
+  end_date       DateTime?
+  ubication      Ubication   @relation(fields: [id_ubication], references: [id_ubication])
+  id_ubication   Int
+  salary         Float
+  benefit        String
+  social_security String
+  tax_identification String
+  education_level String
+  educational_degree String
+  certifications  String
+  blood_type     String
+  allergic_to    String
+  contact_information String
+  role           String
+  status         Status     @relation(fields: [id_status], references: [id_status])
+  id_status      Int
+  salary_changes SalaryChange[]
+}
+
+
+
+model SalaryChange {
+  id           Int     @id @default(autoincrement())
+  idEmpleado   Int
+  date         DateTime
+  edit_for     String
+  employee     Employee @relation(fields: [idEmpleado], references: [id])
+}
+
+model Status {
+  id_status    Int      @id @default(autoincrement())
+  name         String
+  employees    Employee[]
 }
