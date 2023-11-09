@@ -1,0 +1,21 @@
+table{
+    border-collapse: collapse;
+    border-spacing: 0;
+    width: 100;
+    border: solid 1px #ddd;
+    text-align: center;
+}
+
+thead, tfoot{
+    background: 333;
+    color: white;
+}
+
+th, td {
+    /* text-align: left; */
+    padding: 16px;
+}
+
+tr:nth-child(even){
+    background: rgb(105, 100, 100);
+}
