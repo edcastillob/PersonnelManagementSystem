@@ -6,8 +6,12 @@ import { useRouter } from "next/navigation";
 import Swal from "sweetalert2";
 import { useSession } from "next-auth/react";
 import { useState } from "react";
+import Theme from "../theme/Theme";
+
+
 
 const Navbar = () => {
+  
   const { data: session } = useSession();
   const router = useRouter();
   const [isDropdownOpen, setDropdownOpen] = useState(false);
@@ -33,6 +37,7 @@ const Navbar = () => {
   return (
     <nav className="flex justify-between bg-gray-800 px-24 items-center py-3">
       <h1 className="text-3xl font-bold ">App</h1>
+      <Theme /> 
       <ul className=" flex gap-x-2">
         <Link href="/">Home</Link>
         {!session ? (

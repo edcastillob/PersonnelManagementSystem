@@ -1,6 +1,6 @@
 import { RegistrationData } from "@/interfaces/users/User.interface";
 import { NextResponse } from "next/server";
-import db from "@/libs/db";
+import db from "@/lib/db";
 import bcrypt from "bcrypt";
 
 export async function POST(request: { json: () => Promise<RegistrationData> }) {
