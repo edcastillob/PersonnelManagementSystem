@@ -20,7 +20,12 @@ export default function RootLayout({
     <html lang="en">
       <body>
         {" "}
-        <Providers>
+        <Providers
+                    attribute="class"
+                    defaultTheme="system"
+                    enableSystem
+                    disableTransitionOnChange
+        >
           <Navbar />
           {children}
           </Providers>
