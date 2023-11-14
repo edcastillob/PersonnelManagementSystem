@@ -15,9 +15,8 @@ const router = useRouter();
     formState: { errors },
   } = useForm();
 
-  const onSubmit = handleSubmit(async(data) => {
+  const onSubmit = handleSubmit(async(data) => {   
         const newDepartment = await axios.post('/api/employee/department', data);
-
         reset();
     if (newDepartment.statusText) {
       toast.info("Department created");

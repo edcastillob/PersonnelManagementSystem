@@ -15,12 +15,21 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Department } from "@/interfaces/employee/Department.interface";
+import Swal from "sweetalert2";
+import axios from "axios";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { useRouter } from "next/navigation";
 
 const DataTable: React.FC<{ data: Department[] }> = ({ data }) => {
+  const router = useRouter();
   const [searchValue, setSearchValue] = useState("");
 
+  
+  
+  
   const columns: ColumnDef<Department, Department>[] = [
     {
       header: "ID Department",
@@ -45,7 +54,10 @@ const DataTable: React.FC<{ data: Department[] }> = ({ data }) => {
       value.toString().toLowerCase().includes(searchValue.toLowerCase())
     )
   );
-  console.log(filteredData);
+  // console.log(filteredData);
+  const [datos, setDatos] = useState(filteredData)
+
+ 
 
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchValue(event.target.value);
@@ -54,22 +66,62 @@ const DataTable: React.FC<{ data: Department[] }> = ({ data }) => {
   const handleClearSearch = () => {
     setSearchValue("");
   };
+  
+  const handleDelete = async (e: any) => {
+    const { isConfirmed } = await Swal.fire({
+      title: "¿you want to delete the department?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "Sí, delete department",
+      cancelButtonText: "No, cancelar",
+    });
 
-  const handleDelete = (e: any) => alert(`Deleting department  # ${e}`);
+    if (isConfirmed) {
+      
+      try {
+        const departmentDelete = await axios.delete(
+          `/api/employee/department/${e}`
+        );
+        const { name } = departmentDelete.data;
+        if (departmentDelete.statusText === "OK") {
+          toast.info(`${name} was removed from department`);
+          router.refresh();
+         router.push('/employee/department/all')
+          
+          return 
+
+        } else {
+          toast.warning(`Error department deleting`);
+
+          return;
+        }
+      } catch (error) {
+        console.error("Error ", error);
+      }
+    }
+  };
+
   const handleEdit = (e: any) => alert(`Editing department  # ${e}`);
 
   return (
     <section className="h-[calc(100vh-7rem)] justify-center items-center flex">
       <div className="rounded-md border">
-        <div className="search-container">
+        <div className="search-container justify-end flex">
           <input
             type="text"
             placeholder="Search..."
             value={searchValue}
             onChange={handleSearchChange}
+            className="rounded px-4 ml-2 mt-2"
           />
           <button onClick={handleClearSearch}>
-            <img className="mt-2 " src="/clean.png" alt="clean" width={20} height={25}/>
+            <img
+              className="mt-2 "
+              src="/clean.png"
+              alt="clean"
+              width={20}
+              height={25}
+            />
           </button>
         </div>
         <Table>
@@ -127,23 +179,22 @@ const DataTable: React.FC<{ data: Department[] }> = ({ data }) => {
               ))
             ) : (
               <TableRow>
-                <TableCell
-                  colSpan={columns.length}
-                  className="h-24 text-center"
-                >
-                  <img
-                    className="justify-center items-center"
-                    src="/loading.gif"
-                    alt="/loading gif"
-                    width={65}
-                    height={65}
-                  />
+                <TableCell colSpan={columns.length}>
+                  <div className="flex justify-between items-center flex-col">
+                    <img
+                      src="/loading.svg"
+                      alt="/loading gif"
+                      width={45}
+                      height={45}
+                    />
+                  </div>
                 </TableCell>
               </TableRow>
             )}
           </TableBody>
         </Table>
       </div>
+      <ToastContainer />
     </section>
   );
 };

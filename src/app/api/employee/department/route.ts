@@ -7,7 +7,7 @@ export async function POST(request: { json: () => Department }) {
   const prisma = new PrismaClient();
 
   try {
-    const data = request.json();
+    const data = await request.json();
     const { name } = data;
 
     if (!name) {
@@ -64,15 +64,3 @@ export async function GET() {
     await prisma.$disconnect();
   }
 }
-
-// }
-// export async function PUT(){
-//     return NextResponse.json({
-//         message: "Editando Datos!"
-//     })
-// }
-// export async function DELETE(){
-//     return NextResponse.json({
-//         message: "Eliminando Datos!"
-//     })
-// }
