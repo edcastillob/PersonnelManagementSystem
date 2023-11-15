@@ -6,7 +6,6 @@ import { error } from "console";
 
 export async function DELETE(request: any, {params}: any){
     const id_department = +params.id;
-    console.log(id_department)
     const prisma = new PrismaClient();
   
     try {
@@ -40,13 +39,87 @@ export async function DELETE(request: any, {params}: any){
     }
   }
   
+  export async function GET(request: any, {params}: any){
+    const id_department = +params.id;   
+    const prisma = new PrismaClient();
+  
+    try {
+        const department = await prisma.department.findUnique({
+            where: {
+                id_department
+            },
+         });
+      
+      if (!department) {
+        throw new Error(error as unknown as string);
+      }
+      
+         return NextResponse.json(department)            
+      
+    } catch (error) {
+      console.error("Error searching department:", error);
+      return NextResponse.json(
+        {
+          message: "Error searching department",
+        },
+        { status: 500 }
+      );
+    } finally {
+      await prisma.$disconnect();
+    }
+  }
   
   
+
+
+
+ 
+
+  export async function PUT(request: { json: () => Department }, { params }: any) {
+    const id_department = +params.id;
+    const prisma = new PrismaClient();
   
-  // }
-  // export async function PUT(){
-  //     return NextResponse.json({
-  //         message: "Editando Datos!"
-  //     })
-  // }
+    try {
+      const depExist = await prisma.department.findUnique({
+        where: {
+          id_department,
+        },
+      });
   
+      if (!depExist) {
+        console.error("Error searching department:", error);
+        return NextResponse.json(
+          {
+            message: "Error searching department",
+          },
+          { status: 404 }
+        );
+      }
+      
+        const data = await request.json();
+        const { name } = data;
+  
+        const departmentUpdate = await prisma.department.update({
+          where: {
+            id_department,
+          },
+          data: {
+            name,
+          },
+        });
+  
+        return NextResponse.json(departmentUpdate);
+      
+    } catch (error) {
+      console.error('Error updating department:', error);
+  
+      return {
+        status: 500,
+        body: {
+          message: 'Error updating department',
+        },
+      };
+    } finally {
+      await prisma.$disconnect();
+    }
+  }

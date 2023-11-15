@@ -9,6 +9,9 @@ import DataTable from "@/components/data-table/table";
 const DepartmentsPage = () => {
   const [departments, setDepartments] = useState<Department[]>([]);
 
+
+  
+
   const loadDepartments = async () => {
     try {
       const response = await axios.get("/api/employee/department");
@@ -27,13 +30,8 @@ const DepartmentsPage = () => {
   }, []);
 
   return (
-    <div>
-      {/* <ul>
-        {departments.map((department) => (
-          <li key={department.id_department}>{department.name}</li>
-        ))}
-      </ul> */}
-       <DataTable data={departments} />
+    <div>    
+       <DataTable data={departments} setDepartments={setDepartments}/>
     </div>
   );
 };
