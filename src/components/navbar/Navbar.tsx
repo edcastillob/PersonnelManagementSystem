@@ -8,13 +8,11 @@ import { useSession } from "next-auth/react";
 import { useState } from "react";
 import Theme from "../theme/Theme";
 
-
-
 const Navbar = () => {
-  
   const { data: session } = useSession();
   const router = useRouter();
   const [isDropdownOpen, setDropdownOpen] = useState(false);
+  const [isDropdownPositionOpen, setDropdownPositionOpen] = useState(false);
 
   const handleLogout = async () => {
     const { isConfirmed } = await Swal.fire({
@@ -37,36 +35,61 @@ const Navbar = () => {
   return (
     <nav className="flex justify-between bg-gray-800 px-24 items-center py-3">
       <h1 className="text-3xl font-bold ">App</h1>
-      <Theme /> 
+      <Theme />
       <ul className=" flex gap-x-2">
         <Link href="/">Home</Link>
         {!session ? (
           <>
             <div className="relative">
-  <a
-    onClick={() => {
-      setDropdownOpen(!isDropdownOpen);
-    }}
-  >
-    Department
-  </a>
-  {isDropdownOpen && (
-    <div className="absolute text-white text-center shadow-lg flex flex-col items-start mt-2 space-y-2">
-      <Link
-        href="/employee/department/all"
-        onClick={() => setDropdownOpen(false)} 
-      >
-        All
-      </Link>
-      <Link
-        href="/employee/department/create"
-        onClick={() => setDropdownOpen(false)} 
-      >
-        Create
-      </Link>
-    </div>
-  )}
-</div>
+              <a
+                onClick={() => {
+                  setDropdownOpen(!isDropdownOpen);
+                }}
+              >
+                Department
+              </a>
+              {isDropdownOpen && (
+                <div className="absolute text-white text-center shadow-lg flex flex-col items-start mt-2 space-y-2">
+                  <Link
+                    href="/employee/department/all"
+                    onClick={() => setDropdownOpen(false)}
+                  >
+                    All
+                  </Link>
+                  <Link
+                    href="/employee/department/create"
+                    onClick={() => setDropdownOpen(false)}
+                  >
+                    Create
+                  </Link>
+                </div>
+              )}
+            </div>
+            <div className="relative">
+              <a
+                onClick={() => {
+                  setDropdownPositionOpen(!isDropdownPositionOpen);
+                }}
+              >
+                Position
+              </a>
+              {isDropdownPositionOpen && (
+                <div className="absolute text-white text-center shadow-lg flex flex-col items-start mt-2 space-y-2">
+                  <Link
+                    href="/employee/position/all"
+                    onClick={() => setDropdownPositionOpen(false)}
+                  >
+                    All
+                  </Link>
+                  <Link
+                    href="/employee/position/create"
+                    onClick={() => setDropdownPositionOpen(false)}
+                  >
+                    Create
+                  </Link>
+                </div>
+              )}
+            </div>
 
             <Link href="/auth/login">Login</Link>
             <Link href="/auth/register">Register</Link>

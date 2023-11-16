@@ -16,25 +16,24 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { SetStateAction, useState } from "react";
-import { Department } from "@/interfaces/employee/Department.interface";
+import { Position } from "@/interfaces/employee/Position.interface";
 import Swal from "sweetalert2";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useRouter } from "next/navigation";
-import { Button } from "../ui/button";
 
-const DataTable: React.FC<{
-  data: Department[];
-  setDepartments: React.Dispatch<React.SetStateAction<Department[]>>;
+const DataTablePosition: React.FC<{
+  data: Position[];
+  setDepartments: React.Dispatch<React.SetStateAction<Position[]>>;
 }> = ({ data, setDepartments }) => {
   const router = useRouter();
   const [searchValue, setSearchValue] = useState("");
 
-  const columns: ColumnDef<Department, Department>[] = [
+  const columns: ColumnDef<Position, Position>[] = [
     {
-      header: "ID Department",
-      accessorKey: "id_department",
+      header: "ID Position",
+      accessorKey: "id_cargo",
     },
     {
       header: "Name",
@@ -66,30 +65,30 @@ const DataTable: React.FC<{
 
   const handleDelete = async (e: any) => {
     const { isConfirmed } = await Swal.fire({
-      title: "¿you want to delete the department?",
+      title: "¿you want to delete the position?",
       icon: "warning",
       showCancelButton: true,
-      confirmButtonText: "Sí, delete department",
+      confirmButtonText: "Yes, delete position",
       cancelButtonText: "No, cancelar",
     });
 
     if (isConfirmed) {
       try {
-        const departmentDelete = await axios.delete(
-          `/api/employee/department/${e}`
+        const positionDelete = await axios.delete(
+          `/api/employee/position/${e}`
         );
-        const { name } = departmentDelete.data;
-        if (departmentDelete.statusText === "OK") {
-          toast.info(`${name} was removed from department`);
+        const { name } = positionDelete.data;
+        if (positionDelete.statusText === "OK") {
+          toast.info(`${name} was removed from position`);
           router.refresh();
 
-          setDepartments((prevDepartments) =>
-            prevDepartments.filter((d) => d.id_department !== e)
+          setDepartments((prevPosition) =>
+            prevPosition.filter((position) => position.id_cargo !== e)
           );
 
           return;
         } else {
-          toast.warning(`Error department deleting`);
+          toast.warning(`Error position deleting`);
 
           return;
         }
@@ -101,15 +100,15 @@ const DataTable: React.FC<{
 
   const handleEdit = async (e: any) => {
     const { isConfirmed } = await Swal.fire({
-      title: "¿you want to Update the department?",
+      title: "¿you want to Update the position?",
       icon: "warning",
       showCancelButton: true,
-      confirmButtonText: "Sí, update department",
+      confirmButtonText: "Yes, update position",
       cancelButtonText: "No, cancelar",
     });
 
     if (isConfirmed) {
-      router.push(`/employee/department/${e}`);
+      router.push(`/employee/position/${e}`);
     }
   };
 
@@ -164,21 +163,21 @@ const DataTable: React.FC<{
 
           <TableBody>
             {filteredData.length ? (
-              filteredData.map((item: Department) => (
+              filteredData.map((item: Position) => (
                 <TableRow
-                  key={`${item.id_department}-${
+                  key={`${item.id_cargo}-${
                     Math.floor(Math.random() * 80000) + 10000
                   }`}
                 >
                   {columns.map((column) => (
                     <TableCell
-                      key={`${item.id_department}-${
+                      key={`${item.id_cargo}-${
                         Math.floor(Math.random() * 90000) + 10000
                       }`}
                     >
                       {column.header === "Delete" ? (
                         <button
-                          onClick={() => handleDelete(item.id_department)}
+                          onClick={() => handleDelete(item.id_cargo)}
                         >
                           <img
                             src="/delete.png"
@@ -188,7 +187,7 @@ const DataTable: React.FC<{
                           />
                         </button>
                       ) : column.header === "Edit" ? (
-                        <button onClick={() => handleEdit(item.id_department)}>
+                        <button onClick={() => handleEdit(item.id_cargo)}>
                           <img
                             src="/edit.svg"
                             alt="Delete"
@@ -225,4 +224,4 @@ const DataTable: React.FC<{
   );
 };
 
-export default DataTable;
+export default DataTablePosition;

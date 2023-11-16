@@ -2,7 +2,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { Department } from "@/interfaces/employee/Department.interface";
-import DataTable from "@/components/data-table/table";
+import DataTable from "@/components/employee/department/data-table/table";
 
 
 
