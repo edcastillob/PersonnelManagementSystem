@@ -13,6 +13,7 @@ const Navbar = () => {
   const router = useRouter();
   const [isDropdownOpen, setDropdownOpen] = useState(false);
   const [isDropdownPositionOpen, setDropdownPositionOpen] = useState(false);
+  const [isDropdownUbicationOpen, setDropdownUbicationOpen] = useState(false);
 
   const handleLogout = async () => {
     const { isConfirmed } = await Swal.fire({
@@ -90,7 +91,31 @@ const Navbar = () => {
                 </div>
               )}
             </div>
-
+            <div className="relative">
+              <a
+                onClick={() => {
+                  setDropdownUbicationOpen(!isDropdownUbicationOpen);
+                }}
+              >
+                Ubication
+              </a>
+              {isDropdownUbicationOpen && (
+                <div className="absolute text-white text-center shadow-lg flex flex-col items-start mt-2 space-y-2">
+                  <Link
+                    href="/employee/ubication/all"
+                    onClick={() => setDropdownUbicationOpen(false)}
+                  >
+                    All
+                  </Link>
+                  <Link
+                    href="/employee/ubication/create"
+                    onClick={() => setDropdownUbicationOpen(false)}
+                  >
+                    Create
+                  </Link>
+                </div>
+              )}
+            </div>
             <Link href="/auth/login">Login</Link>
             <Link href="/auth/register">Register</Link>
           </>
