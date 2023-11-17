@@ -2,7 +2,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { Ubication } from "@/interfaces/employee/Ubication.interface";
-import DataTableUbication from "@/components/employee/ubication/data-table/table";
+import DataTableUbication from "@/components/employee/ubication/table";
 
 
 

@@ -14,6 +14,7 @@ const Navbar = () => {
   const [isDropdownOpen, setDropdownOpen] = useState(false);
   const [isDropdownPositionOpen, setDropdownPositionOpen] = useState(false);
   const [isDropdownUbicationOpen, setDropdownUbicationOpen] = useState(false);
+  const [isDropdownRoleOpen, setDropdownRoleOpen] = useState(false);
 
   const handleLogout = async () => {
     const { isConfirmed } = await Swal.fire({
@@ -110,6 +111,31 @@ const Navbar = () => {
                   <Link
                     href="/employee/ubication/create"
                     onClick={() => setDropdownUbicationOpen(false)}
+                  >
+                    Create
+                  </Link>
+                </div>
+              )}
+            </div>
+            <div className="relative">
+              <a
+                onClick={() => {
+                  setDropdownRoleOpen(!isDropdownRoleOpen);
+                }}
+              >
+                Role
+              </a>
+              {isDropdownRoleOpen && (
+                <div className="absolute text-white text-center shadow-lg flex flex-col items-start mt-2 space-y-2">
+                  <Link
+                    href="/employee/role/all"
+                    onClick={() => setDropdownRoleOpen(false)}
+                  >
+                    All
+                  </Link>
+                  <Link
+                    href="/employee/role/create"
+                    onClick={() => setDropdownRoleOpen(false)}
                   >
                     Create
                   </Link>

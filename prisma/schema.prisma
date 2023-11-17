@@ -26,18 +26,18 @@ model Department {
   id_department  Int      @id @default(autoincrement())
   name          String
   employees     Employee[]
-  job_titles    JobTitle[]
+  // job_titles    JobTitle[]
 }
 
 
 
-model JobTitle {
-  id_cargo      Int      @id @default(autoincrement())
-  name          String
-  department    Department @relation(fields: [id_department], references: [id_department])
-  id_department Int
-  employees     Employee[]
-}
+// model JobTitle {
+//   id_cargo      Int      @id @default(autoincrement())
+//   name          String
+//   department    Department @relation(fields: [id_department], references: [id_department])
+//   id_department Int
+//   employees     Employee[]
+// }
 
 
 
@@ -45,6 +45,15 @@ model JobTitle {
 model Cargo {
   id_cargo      Int      @id @default(autoincrement())
   name          String
+  employees     Employee[]
+
+ 
+}
+
+model Role {
+  id_role      Int      @id @default(autoincrement())
+  name          String
+  employees     Employee[]
  
 }
 
@@ -69,12 +78,15 @@ model Employee {
   email          String @unique
   department     Department @relation(fields: [id_department], references: [id_department])
   id_department  Int
-  job_title      JobTitle   @relation(fields: [id_cargo], references: [id_cargo])
+  // job_title      JobTitle   @relation(fields: [id_cargo], references: [id_cargo])
+  cargo          Cargo @relation(fields: [id_cargo], references: [id_cargo])
   id_cargo       Int
   start_date     DateTime
   end_date       DateTime?
   ubication      Ubication   @relation(fields: [id_ubication], references: [id_ubication])
   id_ubication   Int
+  role           Role   @relation(fields: [id_role], references: [id_role])
+  id_role        Int
   salary         Float
   benefit        String
   social_security String
@@ -84,8 +96,7 @@ model Employee {
   certifications  String
   blood_type     String
   allergic_to    String
-  contact_information String
-  role           String
+  contact_information String 
   status         Status     @relation(fields: [id_status], references: [id_status])
   id_status      Int
   salary_changes SalaryChange[]

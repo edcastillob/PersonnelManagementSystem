@@ -2,7 +2,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { Position } from "@/interfaces/employee/Position.interface";
-import DataTablePosition from "@/components/employee/position/data-table/table";
+import DataTablePosition from "@/components/employee/position/table";
 
 
 
