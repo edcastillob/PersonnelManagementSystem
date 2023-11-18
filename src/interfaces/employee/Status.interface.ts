@@ -1,6 +1,6 @@
-export default interface Ubication {
+export default interface Status {
     getIsSelected(): unknown;
     getVisibleCells(): unknown;
-    id_ubication: number;
+    id_status: number;
     name: string;
   }

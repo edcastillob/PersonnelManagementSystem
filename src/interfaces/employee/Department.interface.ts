@@ -1,6 +1,8 @@
-export interface Department {
+export default interface Department {
     getIsSelected(): unknown;
     getVisibleCells(): unknown;
     id_department: number;
     name: string;
   }
+
+ 

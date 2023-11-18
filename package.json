@@ -33,6 +33,7 @@
   },
   "devDependencies": {
     "@types/bcrypt": "^5.0.1",
+    "@types/next": "^9.0.0",
     "@types/node": "^20",
     "@types/nodemailer": "^6.4.13",
     "@types/react": "^18",

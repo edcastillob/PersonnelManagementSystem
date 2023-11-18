@@ -2,19 +2,24 @@
 
 import Link from "next/link";
 import { signOut } from "next-auth/react";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname  } from "next/navigation";
 import Swal from "sweetalert2";
 import { useSession } from "next-auth/react";
 import { useState } from "react";
 import Theme from "../theme/Theme";
 
+
 const Navbar = () => {
   const { data: session } = useSession();
   const router = useRouter();
+  const pathname = usePathname();
   const [isDropdownOpen, setDropdownOpen] = useState(false);
   const [isDropdownPositionOpen, setDropdownPositionOpen] = useState(false);
   const [isDropdownUbicationOpen, setDropdownUbicationOpen] = useState(false);
   const [isDropdownRoleOpen, setDropdownRoleOpen] = useState(false);
+
+  // add conditions for rute admin 
+  const isDashboardRoute = pathname  === '/dashboard'
 
   const handleLogout = async () => {
     const { isConfirmed } = await Swal.fire({
@@ -35,13 +40,16 @@ const Navbar = () => {
     }
   };
   return (
-    <nav className="flex justify-between bg-gray-800 px-24 items-center py-3">
+    <nav className="flex justify-between bg-gray-800 px-24 items-center py-3">    
       <h1 className="text-3xl font-bold ">App</h1>
       <Theme />
       <ul className=" flex gap-x-2">
         <Link href="/">Home</Link>
         {!session ? (
           <>
+          {isDashboardRoute && (
+              // Render content specific to the "/dashboard" route
+              <>
             <div className="relative">
               <a
                 onClick={() => {
@@ -142,12 +150,15 @@ const Navbar = () => {
                 </div>
               )}
             </div>
+             </>
+            )}
             <Link href="/auth/login">Login</Link>
             <Link href="/auth/register">Register</Link>
+            <Link href="/dashboard">Dashboard</Link>
+            <Link href="/employee/create/data-employee">Employee</Link>
           </>
         ) : (
           <>
-            <Link href="/dashboard">Dashboard</Link>
             <button onClick={handleLogout}>LogOut</button>
           </>
         )}

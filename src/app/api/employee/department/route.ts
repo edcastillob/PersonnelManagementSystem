@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { PrismaClient } from "@prisma/client";
-import { Department } from "@/interfaces/employee/Department.interface";
+import  Department  from "@/interfaces/employee/Department.interface";
 import { error } from "console";
 
 export async function POST(request: { json: () => Department }) {

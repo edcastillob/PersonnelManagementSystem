@@ -106,10 +106,10 @@ model Employee {
 
 model SalaryChange {
   id           Int     @id @default(autoincrement())
-  idEmpleado   Int
+  id_employee  Int
   date         DateTime
   edit_for     String
-  employee     Employee @relation(fields: [idEmpleado], references: [id])
+  employee     Employee @relation(fields: [id_employee], references: [id])
 }
 
 model Status {

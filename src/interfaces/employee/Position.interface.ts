@@ -1,4 +1,4 @@
-export interface Position {
+export default interface Position {
     getIsSelected(): unknown;
     getVisibleCells(): unknown;
     id_cargo: number;
