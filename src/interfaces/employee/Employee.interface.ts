@@ -8,7 +8,7 @@ import Status from '@/interfaces/employee/Status.interface';
 export default interface Employee {
   id: number;
   dni: string;
-  name: string;
+  username: string;
   fullname: string;
   gender: string;
   birthdate: Date;
@@ -29,17 +29,17 @@ export default interface Employee {
   id_role: number;
   salary: number;
   benefit: string;
-  social_security: string;
-  tax_identification: string;
+  social_security?: string;
+  tax_identification?: string;
   education_level: string;
-  educational_degree: string;
-  certifications: string;
-  blood_type: string;
-  allergic_to: string;
+  educational_degree?: string;
+  certifications?: string;
+  blood_type?: string;
+  allergic_to?: string;
   contact_information: string;
   status: Status;
   id_status: number;
-  salary_changes: SalaryChange[];
+  salary_changes?: SalaryChange[];
 }
 
 

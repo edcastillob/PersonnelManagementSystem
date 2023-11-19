@@ -7,15 +7,16 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  url      = env("DATABASE_URL")
+  // url      = env("DATABASE_URL")
+  url      ="postgresql://postgres:root@localhost:5432/sgp?schema=public"
 }
 
 model User {
-    id Int @id @default(autoincrement())   
-    email String @unique
-    username String @unique
-    fullname String  @default("fullname")
-    password String
+    id        Int @id @default(autoincrement())   
+    email     String @unique
+    username  String @unique
+    fullname  String  @default("fullname")
+    password  String
     createdAt DateTime @default(now())
     updatedAt DateTime
   }
@@ -24,8 +25,8 @@ model User {
 
 model Department {
   id_department  Int      @id @default(autoincrement())
-  name          String
-  employees     Employee[]
+  name           String
+  employees      Employee[]
   // job_titles    JobTitle[]
 }
 
@@ -67,7 +68,7 @@ model Ubication {
 model Employee {
   id             Int        @id @default(autoincrement())
   dni            String     @unique
-  name           String
+  username       String     @unique
   fullname       String
   gender         String
   birthdate      DateTime
