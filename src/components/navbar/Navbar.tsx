@@ -155,7 +155,7 @@ const Navbar = () => {
             <Link href="/auth/login">Login</Link>
             <Link href="/auth/register">Register</Link>
             <Link href="/dashboard">Dashboard</Link>
-            <Link href="/employee/create/data-employee">Employee</Link>
+            <Link href="/employee/data-employee/create">Employee</Link>
           </>
         ) : (
           <>
