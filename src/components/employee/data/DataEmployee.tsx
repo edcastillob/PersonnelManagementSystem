@@ -5,11 +5,13 @@ import { useRouter } from 'next/navigation'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useDropzone } from 'react-dropzone';
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import Department from "@/interfaces/employee/Department.interface";
 
 const DataEmployee = () => {
   const router = useRouter();
   const [uploadedImage, setUploadedImage] = useState<{ url: string; file: File } | null>(null);
+  const [departments, setDepartments] = useState<Department[]>([]);
 
   const { getRootProps, getInputProps } = useDropzone({
     accept: 'image/*',
@@ -29,6 +31,19 @@ const DataEmployee = () => {
     formState: { errors },
   } = useForm();
   console.log()
+
+  useEffect(() => {    
+    const fetchDepartments = async () => {
+      try {
+        const response = await axios.get('/api/employee/department'); 
+        setDepartments(response.data);
+      } catch (error) {
+        console.error('Error fetching departments', error);
+      }
+    };
+
+    fetchDepartments();
+  }, []);
   return (
    <div className="h-[calc(100vh-7rem)] flex justify-center items-center">
       <form className="w-1/4">
@@ -233,6 +248,75 @@ const DataEmployee = () => {
           </div>
         )} */}
 
+
+<label htmlFor="address" className="text-slate-500 mb-2 block">
+         <b>Address</b> 
+        </label>
+        <input
+          type="text"
+          {...register("address", {
+            required: {
+              value: true,
+              message: "Employee address is required",
+            },
+          })}
+          className="p-3 rounded block mb-2 bg-slate-900 text-slate-300 w-full"
+          placeholder="...Insert address"
+        />
+        {errors.address && (
+          <span className="text-red-500  text-xs">
+            {typeof errors.address.message === "string"
+              ? errors.address.message
+              : "Error occurred"}
+          </span>
+        )}
+
+<label htmlFor="phone" className="text-slate-500 mb-2 block">
+         <b>Phone</b> 
+        </label>
+        <input
+          type="text"
+          {...register("phone", {
+            required: {
+              value: true,
+              message: "Employee phone is required",
+            },
+          })}
+          className="p-3 rounded block mb-2 bg-slate-900 text-slate-300 w-full"
+          placeholder="...Insert phone"
+        />
+        {errors.phone && (
+          <span className="text-red-500  text-xs">
+            {typeof errors.phone.message === "string"
+              ? errors.phone.message
+              : "Error occurred"}
+          </span>
+        )}
+
+<label htmlFor="department" className="text-slate-500 mb-2 block">
+          <b>Department</b>
+        </label>
+        <select
+          {...register("department", {
+            required: {
+              value: true,
+              message: "Employee department is required",
+            },
+          })}
+          className="p-3 rounded block mb-2 bg-slate-900 text-slate-300 w-full"
+        >
+          <option value="">Select Department</option>
+          {departments.map((department) => (
+            <option key={department.id_department} value={department.id_department}>
+              {department.name}
+            </option>
+          ))}
+        </select>
+        {errors.department && (
+          <span className="text-red-500 text-xs">
+            {typeof errors.department.message === "string" ? errors.department.message : "Error occurred"}
+          </span>
+        )}
 
         <button 
         className="w-full bg-indigo-600 text-white p-3 rounded-lg mt-2"
