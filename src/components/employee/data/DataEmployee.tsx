@@ -7,11 +7,13 @@ import 'react-toastify/dist/ReactToastify.css';
 import { useDropzone } from 'react-dropzone';
 import { useEffect, useState } from "react";
 import Department from "@/interfaces/employee/Department.interface";
+import Position from "@/interfaces/employee/Position.interface";
 
 const DataEmployee = () => {
   const router = useRouter();
   const [uploadedImage, setUploadedImage] = useState<{ url: string; file: File } | null>(null);
   const [departments, setDepartments] = useState<Department[]>([]);
+  const [position, setPosition] = useState<Position[]>([]);
 
   const { getRootProps, getInputProps } = useDropzone({
     accept: 'image/*',
@@ -33,16 +35,18 @@ const DataEmployee = () => {
   console.log()
 
   useEffect(() => {    
-    const fetchDepartments = async () => {
+    const fetchData = async () => {
       try {
-        const response = await axios.get('/api/employee/department'); 
-        setDepartments(response.data);
+        const responseDepartment = await axios.get('/api/employee/department'); 
+        setDepartments(responseDepartment.data);
+        const responsePosition = await axios.get('/api/employee/position'); 
+        setPosition(responsePosition.data);
       } catch (error) {
-        console.error('Error fetching departments', error);
+        console.error('Error fetching data', error);
       }
     };
 
-    fetchDepartments();
+    fetchData();
   }, []);
   return (
    <div className="h-[calc(100vh-7rem)] flex justify-center items-center">
@@ -318,6 +322,30 @@ const DataEmployee = () => {
           </span>
         )}
 
+<label htmlFor="position" className="text-slate-500 mb-2 block">
+          <b>Position</b>
+        </label>
+        <select
+          {...register("position", {
+            required: {
+              value: true,
+              message: "Employee position is required",
+            },
+          })}
+          className="p-3 rounded block mb-2 bg-slate-900 text-slate-300 w-full"
+        >
+          <option value="">Select position</option>
+          {position.map((pos) => (
+            <option key={pos.id_cargo} value={pos.id_cargo}>
+              {pos.name}
+            </option>
+          ))}
+        </select>
+        {errors.position && (
+          <span className="text-red-500 text-xs">
+            {typeof errors.position.message === "string" ? errors.position.message : "Error occurred"}
+          </span>
+        )}
         <button 
         className="w-full bg-indigo-600 text-white p-3 rounded-lg mt-2"
         >
