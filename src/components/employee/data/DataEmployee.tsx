@@ -8,12 +8,14 @@ import { useDropzone } from 'react-dropzone';
 import { useEffect, useState } from "react";
 import Department from "@/interfaces/employee/Department.interface";
 import Position from "@/interfaces/employee/Position.interface";
+import Ubication from "@/interfaces/employee/Ubication.interface";
 
 const DataEmployee = () => {
   const router = useRouter();
   const [uploadedImage, setUploadedImage] = useState<{ url: string; file: File } | null>(null);
   const [departments, setDepartments] = useState<Department[]>([]);
   const [position, setPosition] = useState<Position[]>([]);
+  const [ubication, setUbication] = useState<Ubication[]>([]);
 
   const { getRootProps, getInputProps } = useDropzone({
     accept: 'image/*',
@@ -41,6 +43,8 @@ const DataEmployee = () => {
         setDepartments(responseDepartment.data);
         const responsePosition = await axios.get('/api/employee/position'); 
         setPosition(responsePosition.data);
+        const responseUbication = await axios.get('/api/employee/ubication'); 
+        setUbication(responseUbication.data);
       } catch (error) {
         console.error('Error fetching data', error);
       }
@@ -211,7 +215,7 @@ const DataEmployee = () => {
           </span>
         )}
 
-<label htmlFor="photo" className="text-slate-500 mb-2 block">
+{/* <label htmlFor="photo" className="text-slate-500 mb-2 block">
   <b>Photo</b>
 </label>
 <div {...getRootProps()} className="dropzone">
@@ -236,7 +240,7 @@ const DataEmployee = () => {
     <p>Uploaded Photo:</p>
     <img src={uploadedImage.url} alt="Uploaded" className="w-32 h-32" />
   </div>
-)}
+)} */}
 
 {/* <label htmlFor="photo" className="text-slate-500 mb-2 block">
           <b>Photo</b>
@@ -346,6 +350,71 @@ const DataEmployee = () => {
             {typeof errors.position.message === "string" ? errors.position.message : "Error occurred"}
           </span>
         )}
+        
+        
+<label htmlFor="start_date" className="text-slate-500 mb-2 block">
+  <b>Start Date</b>
+</label>
+<input
+  type="date"
+  {...register("start_date", {
+    required: {
+      value: true,
+      message: "Employee start date is required",
+    },
+  })}
+  className="p-3 rounded block mb-2 bg-slate-900 text-slate-300 w-full"
+/>
+{errors.start_date && (
+  <span className="text-red-500 text-xs">
+    {typeof errors.start_date.message === "string" ? errors.start_date.message : "Error occurred"}
+  </span>
+)}
+
+<label htmlFor="end_date" className="text-slate-500 mb-2 block">
+  <b>End Date</b>
+</label>
+<input
+  type="date"
+  {...register("end_date", {
+    required: {
+      value: true,
+      message: "Employee end date is required",
+    },
+  })}
+  className="p-3 rounded block mb-2 bg-slate-900 text-slate-300 w-full"
+/>
+{errors.end_date && (
+  <span className="text-red-500 text-xs">
+    {typeof errors.end_date.message === "string" ? errors.end_date.message : "Error occurred"}
+  </span>
+)} 
+
+<label htmlFor="ubication" className="text-slate-500 mb-2 block">
+          <b>Ubication</b>
+        </label>
+        <select
+          {...register("ubication", {
+            required: {
+              value: true,
+              message: "Employee ubication is required",
+            },
+          })}
+          className="p-3 rounded block mb-2 bg-slate-900 text-slate-300 w-full"
+        >
+          <option value="">Select ubication</option>
+          {ubication.map((ubication) => (
+            <option key={ubication.id_ubication} value={ubication.id_ubication}>
+              {ubication.name}
+            </option>
+          ))}
+        </select>
+        {errors.ubication && (
+          <span className="text-red-500 text-xs">
+            {typeof errors.ubication.message === "string" ? errors.ubication.message : "Error occurred"}
+          </span>
+        )}
+        
         <button 
         className="w-full bg-indigo-600 text-white p-3 rounded-lg mt-2"
         >
