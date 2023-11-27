@@ -9,6 +9,7 @@ import { useEffect, useState } from "react";
 import Department from "@/interfaces/employee/Department.interface";
 import Position from "@/interfaces/employee/Position.interface";
 import Ubication from "@/interfaces/employee/Ubication.interface";
+import Role from "@/interfaces/employee/Role.interface";
 
 const DataEmployee = () => {
   const router = useRouter();
@@ -16,17 +17,18 @@ const DataEmployee = () => {
   const [departments, setDepartments] = useState<Department[]>([]);
   const [position, setPosition] = useState<Position[]>([]);
   const [ubication, setUbication] = useState<Ubication[]>([]);
+  const [role, setRole] = useState<Role[]>([]);
 
-  const { getRootProps, getInputProps } = useDropzone({
-    accept: 'image/*',
-    onDrop: (acceptedFiles) => {
-      // Lógica de carga de Cloudinary
-      setUploadedImage({
-        url: URL.createObjectURL(acceptedFiles[0]),
-        file: acceptedFiles[0],
-      });
-    },
-  });
+  // const { getRootProps, getInputProps } = useDropzone({
+  //   accept: 'image/*',
+  //   onDrop: (acceptedFiles) => {
+  //     // Lógica de carga de Cloudinary
+  //     setUploadedImage({
+  //       url: URL.createObjectURL(acceptedFiles[0]),
+  //       file: acceptedFiles[0],
+  //     });
+  //   },
+  // });
   
   const {
     register,
@@ -36,21 +38,23 @@ const DataEmployee = () => {
   } = useForm();
   console.log()
 
-  useEffect(() => {    
-    const fetchData = async () => {
-      try {
-        const responseDepartment = await axios.get('/api/employee/department'); 
-        setDepartments(responseDepartment.data);
-        const responsePosition = await axios.get('/api/employee/position'); 
-        setPosition(responsePosition.data);
-        const responseUbication = await axios.get('/api/employee/ubication'); 
-        setUbication(responseUbication.data);
-      } catch (error) {
-        console.error('Error fetching data', error);
-      }
-    };
+  const fetchData = async (
+    url: string, 
+    setter: React.Dispatch<React.SetStateAction<any[]>>) => {
+    try {
+      const response = await axios.get(url);
+      setter(response.data);
+    } catch (error) {
+      console.error('Error fetching data', error);
+    }
+  };
+  
 
-    fetchData();
+  useEffect(() => {
+    fetchData('/api/employee/department', setDepartments);
+    fetchData('/api/employee/position', setPosition);
+    fetchData('/api/employee/ubication', setUbication);
+    fetchData('/api/employee/role', setRole);
   }, []);
   return (
    <div className="h-[calc(100vh-7rem)] flex justify-center items-center">
@@ -414,6 +418,63 @@ const DataEmployee = () => {
             {typeof errors.ubication.message === "string" ? errors.ubication.message : "Error occurred"}
           </span>
         )}
+
+{/* desde acá */}
+<label htmlFor="role" className="text-slate-500 mb-2 block">
+          <b>Role</b>
+        </label>
+        <select
+          {...register("role", {
+            required: {
+              value: true,
+              message: "Employee role is required",
+            },
+          })}
+          className="p-3 rounded block mb-2 bg-slate-900 text-slate-300 w-full"
+        >
+          <option value="">Select role</option>
+          {role.map((role) => (
+            <option key={role.id_role} value={role.id_role}>
+              {role.name}
+            </option>
+          ))}
+        </select>
+        {errors.role && (
+          <span className="text-red-500 text-xs">
+            {typeof errors.role.message === "string" ? errors.role.message : "Error occurred"}
+          </span>
+        )}
+
+<label htmlFor="salary" className="text-slate-500 mb-2 block">
+  <b>Salary</b> 
+</label>
+<input
+  type="text"
+  {...register("salary", {
+    required: {
+      value: true,
+      message: "Employee salary is required",
+    },
+    pattern: {
+      value: /^[0-9]+(?:\.[0-9]{1,2})?$/,
+      message: "Invalid salary format. Use a dot as the decimal separator (e.g., 232.36)",
+    },
+  })}
+  className="p-3 rounded block mb-2 bg-slate-900 text-slate-300 w-full"
+  placeholder="...Insert salary"
+/>
+{errors.salary && (
+  <span className="text-red-500 text-xs">
+    {typeof errors.salary.message === "string"
+      ? errors.salary.message
+      : "Error occurred"}
+  </span>
+)}
+
+
+
+
+
         
         <button 
         className="w-full bg-indigo-600 text-white p-3 rounded-lg mt-2"
