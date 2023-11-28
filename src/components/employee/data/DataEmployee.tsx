@@ -419,7 +419,7 @@ const DataEmployee = () => {
           </span>
         )}
 
-{/* desde acá */}
+
 <label htmlFor="role" className="text-slate-500 mb-2 block">
           <b>Role</b>
         </label>

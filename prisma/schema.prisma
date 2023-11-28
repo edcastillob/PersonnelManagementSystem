@@ -65,6 +65,12 @@ model Ubication {
   employees     Employee[]
 }
 
+model Benefit {
+  id_benefit  Int      @id @default(autoincrement())
+  name          String
+  employees     Employee[]
+}
+
 model Employee {
   id             Int        @id @default(autoincrement())
   dni            String     @unique
@@ -89,7 +95,8 @@ model Employee {
   role           Role   @relation(fields: [id_role], references: [id_role])
   id_role        Int
   salary         Float
-  benefit        String
+  benefit        Benefit @relation(fields: [id_benefit], references: [id_benefit])
+  id_benefit        Int
   social_security String
   tax_identification String
   education_level String
