@@ -10,6 +10,7 @@ import Department from "@/interfaces/employee/Department.interface";
 import Position from "@/interfaces/employee/Position.interface";
 import Ubication from "@/interfaces/employee/Ubication.interface";
 import Role from "@/interfaces/employee/Role.interface";
+import Benefit from "@/interfaces/employee/Benefit.interface";
 
 const DataEmployee = () => {
   const router = useRouter();
@@ -18,6 +19,7 @@ const DataEmployee = () => {
   const [position, setPosition] = useState<Position[]>([]);
   const [ubication, setUbication] = useState<Ubication[]>([]);
   const [role, setRole] = useState<Role[]>([]);
+  const [benefit, setBenefit] = useState<Benefit[]>([]);
 
   // const { getRootProps, getInputProps } = useDropzone({
   //   accept: 'image/*',
@@ -55,9 +57,12 @@ const DataEmployee = () => {
     fetchData('/api/employee/position', setPosition);
     fetchData('/api/employee/ubication', setUbication);
     fetchData('/api/employee/role', setRole);
+    fetchData('/api/employee/benefit', setBenefit);
   }, []);
+
+  
   return (
-   <div className="h-[calc(100vh-7rem)] flex justify-center items-center">
+    <div className="mt-16 flex justify-center items-center">
       <form className="w-1/4">
         <h1 className="text-slate-200 font-bold text-4xl mb-4">
           New Employee
@@ -471,7 +476,30 @@ const DataEmployee = () => {
   </span>
 )}
 
-
+<label htmlFor="benefit" className="text-slate-500 mb-2 block">
+          <b>Benefit</b>
+        </label>
+        <select
+          {...register("benefit", {
+            required: {
+              value: true,
+              message: "Employee benefit is required",
+            },
+          })}
+          className="p-3 rounded block mb-2 bg-slate-900 text-slate-300 w-full"
+        >
+          <option value="">Select Benefit</option>
+          {benefit.map((benefit) => (
+            <option key={benefit.id_benefit} value={benefit.id_benefit}>
+              {benefit.name}
+            </option>
+          ))}
+        </select>
+        {errors.benefit && (
+          <span className="text-red-500 text-xs">
+            {typeof errors.benefit.message === "string" ? errors.benefit.message : "Error occurred"}
+          </span>
+        )}
 
 
 

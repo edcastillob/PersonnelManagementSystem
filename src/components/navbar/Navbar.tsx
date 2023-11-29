@@ -17,6 +17,7 @@ const Navbar = () => {
   const [isDropdownPositionOpen, setDropdownPositionOpen] = useState(false);
   const [isDropdownUbicationOpen, setDropdownUbicationOpen] = useState(false);
   const [isDropdownRoleOpen, setDropdownRoleOpen] = useState(false);
+  const [isDropdownBenefitOpen, setDropdownBenefitOpen] = useState(false);
 
   // add conditions for rute admin 
   const isDashboardRoute = pathname  === '/dashboard'
@@ -119,6 +120,31 @@ const Navbar = () => {
                   <Link
                     href="/employee/ubication/create"
                     onClick={() => setDropdownUbicationOpen(false)}
+                  >
+                    Create
+                  </Link>
+                </div>
+              )}
+            </div>
+            <div className="relative">
+              <a
+                onClick={() => {
+                  setDropdownBenefitOpen(!isDropdownBenefitOpen);
+                }}
+              >
+                Benefit
+              </a>
+              {isDropdownBenefitOpen && (
+                <div className="absolute text-white text-center shadow-lg flex flex-col items-start mt-2 space-y-2">
+                  <Link
+                    href="/employee/benefit/all"
+                    onClick={() => setDropdownBenefitOpen(false)}
+                  >
+                    All
+                  </Link>
+                  <Link
+                    href="/employee/benefit/create"
+                    onClick={() => setDropdownBenefitOpen(false)}
                   >
                     Create
                   </Link>
