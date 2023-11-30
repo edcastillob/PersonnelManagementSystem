@@ -454,7 +454,7 @@ const DataEmployee = () => {
   <b>Salary</b> 
 </label>
 <input
-  type="text"
+  type="number"
   {...register("salary", {
     required: {
       value: true,
@@ -502,8 +502,151 @@ const DataEmployee = () => {
         )}
 
 
+<label htmlFor="social_security" className="text-slate-500 mb-2 block">
+  <b>Social Security</b> 
+</label>
+<input
+  type="text"
+  {...register("social_security", {
+    required: {
+      value: true,
+      message: "Employee social security is required",
+    }
+  })}
+  className="p-3 rounded block mb-2 bg-slate-900 text-slate-300 w-full"
+  placeholder="...Insert social security"
+/>
+{errors.social_security && (
+  <span className="text-red-500 text-xs">
+    {typeof errors.social_security.message === "string"
+      ? errors.social_security.message
+      : "Error occurred"}
+  </span>
+)}
 
+<label htmlFor="tax_identification" className="text-slate-500 mb-2 block">
+  <b>Tax Identification</b> 
+</label>
+<input
+  type="text"
+  {...register("tax_identification", {
+    required: {
+      value: true,
+      message: "Employee tax identification is required",
+    }
+  })}
+  className="p-3 rounded block mb-2 bg-slate-900 text-slate-300 w-full"
+  placeholder="...Insert tax identification"
+/>
+{errors.tax_identification && (
+  <span className="text-red-500 text-xs">
+    {typeof errors.tax_identification.message === "string"
+      ? errors.tax_identification.message
+      : "Error occurred"}
+  </span>
+)}
+
+
+<label htmlFor="education_level" className="text-slate-500 mb-2 block">
+        <b>Education Level</b>
+        </label>
+        <select
+          {...register("education_level", {
+            required: {
+              value: true,
+              message: "Employee education level is required",
+            },
+          })}
+          className="p-3 rounded block mb-2 bg-slate-900 text-slate-300 w-full"
+        >
+          <option value="">Select education_level</option>
+          <option value="none">None</option>
+          <option value="primary">Primary</option>
+          <option value="media">Media</option>
+          <option value="superior">Superior</option>
+          <option value="postgraduate">Postgraduate</option>
+          <option value="master">Master</option>
+        </select>
+        {errors.education_level && (
+          <span className="text-red-500 text-xs">
+            {typeof errors.education_level.message === "string" ? errors.education_level.message : "Error occurred"}
+          </span>
+        )}
         
+
+<label htmlFor="educational_degree" className="text-slate-500 mb-2 block">
+  <b>Educational Degree</b> 
+</label>
+<input
+  type="text"
+  {...register("educational_degree", {
+    required: {
+      value: true,
+      message: "Employee educational degree is required",
+    }
+  })}
+  className="p-3 rounded block mb-2 bg-slate-900 text-slate-300 w-full"
+  placeholder="...Insert educational degree"
+/>
+{errors.educational_degree && (
+  <span className="text-red-500 text-xs">
+    {typeof errors.educational_degree.message === "string"
+      ? errors.educational_degree.message
+      : "Error occurred"}
+  </span>
+)}
+
+<label htmlFor="certifications" className="text-slate-500 mb-2 block">
+  <b>Certifications</b> 
+</label>
+<input
+  type="text"
+  {...register("certifications", {
+    required: {
+      value: true,
+      message: "Employee certifications is required",
+    }
+  })}
+  className="p-3 rounded block mb-2 bg-slate-900 text-slate-300 w-full"
+  placeholder="...Insert certifications"
+/>
+{errors.certifications && (
+  <span className="text-red-500 text-xs">
+    {typeof errors.certifications.message === "string"
+      ? errors.certifications.message
+      : "Error occurred"}
+  </span>
+)}
+
+<label htmlFor="blood_type" className="text-slate-500 mb-2 block">
+        <b>Blood Type</b>
+        </label>
+        <select
+          {...register("blood_type", {
+            required: {
+              value: true,
+              message: "Employee blood type is required",
+            },
+          })}
+          className="p-3 rounded block mb-2 bg-slate-900 text-slate-300 w-full"
+        >
+          <option value="">Select Blood Type</option>
+          <option value="A+">A +</option>
+          <option value="A-">A -</option>
+          <option value="B+">B +</option>
+          <option value="B-">B -</option>
+          <option value="AB+">AB +</option>
+          <option value="AB-">AB -</option>
+          <option value="O+">O +</option>
+          <option value="O-">O -</option>
+
+        </select>
+        {errors.blood_type && (
+          <span className="text-red-500 text-xs">
+            {typeof errors.blood_type.message === "string" ? errors.blood_type.message : "Error occurred"}
+          </span>
+        )}
+
         <button 
         className="w-full bg-indigo-600 text-white p-3 rounded-lg mt-2"
         >
