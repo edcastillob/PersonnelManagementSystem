@@ -647,6 +647,49 @@ const DataEmployee = () => {
           </span>
         )}
 
+<label htmlFor="allergic_to" className="text-slate-500 mb-2 block">
+  <b>Alergic to.</b> 
+</label>
+<input
+  type="text"
+  {...register("allergic_to", {
+    required: {
+      value: true,
+      message: "Employee allergic to is required",
+    }
+  })}
+  className="p-3 rounded block mb-2 bg-slate-900 text-slate-300 w-full"
+  placeholder="...Insert allergic to"
+/>
+{errors.allergic_to && (
+  <span className="text-red-500 text-xs">
+    {typeof errors.allergic_to.message === "string"
+      ? errors.allergic_to.message
+      : "Error occurred"}
+  </span>
+)}
+
+<label htmlFor="contact_information" className="text-slate-500 mb-2 block">
+  <b>Contact information</b> 
+</label>
+<input
+  type="text"
+  {...register("contact_information", {
+    required: {
+      value: true,
+      message: "Employee contact information is required",
+    }
+  })}
+  className="p-3 rounded block mb-2 bg-slate-900 text-slate-300 w-full"
+  placeholder="...Insert contact information"
+/>
+{errors.contact_information && (
+  <span className="text-red-500 text-xs">
+    {typeof errors.contact_information.message === "string"
+      ? errors.contact_information.message
+      : "Error occurred"}
+  </span>
+)}
         <button 
         className="w-full bg-indigo-600 text-white p-3 rounded-lg mt-2"
         >
