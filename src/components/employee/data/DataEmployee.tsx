@@ -11,6 +11,7 @@ import Position from "@/interfaces/employee/Position.interface";
 import Ubication from "@/interfaces/employee/Ubication.interface";
 import Role from "@/interfaces/employee/Role.interface";
 import Benefit from "@/interfaces/employee/Benefit.interface";
+import Status from "@/interfaces/employee/Status.interface";
 
 const DataEmployee = () => {
   const router = useRouter();
@@ -20,6 +21,7 @@ const DataEmployee = () => {
   const [ubication, setUbication] = useState<Ubication[]>([]);
   const [role, setRole] = useState<Role[]>([]);
   const [benefit, setBenefit] = useState<Benefit[]>([]);
+  const [status, setStatus] = useState<Status[]>([]);
 
   // const { getRootProps, getInputProps } = useDropzone({
   //   accept: 'image/*',
@@ -58,6 +60,7 @@ const DataEmployee = () => {
     fetchData('/api/employee/ubication', setUbication);
     fetchData('/api/employee/role', setRole);
     fetchData('/api/employee/benefit', setBenefit);
+    fetchData('/api/employee/status', setStatus);
   }, []);
 
   
@@ -690,6 +693,31 @@ const DataEmployee = () => {
       : "Error occurred"}
   </span>
 )}
+
+<label htmlFor="status" className="text-slate-500 mb-2 block">
+          <b>Status</b>
+        </label>
+        <select
+          {...register("status", {
+            required: {
+              value: true,
+              message: "Employee status is required",
+            },
+          })}
+          className="p-3 rounded block mb-2 bg-slate-900 text-slate-300 w-full"
+        >
+          <option value="">Select status</option>
+          {status.map((status) => (
+            <option key={status.id_status} value={status.id_status}>
+              {status.name}
+            </option>
+          ))}
+        </select>
+        {errors.status && (
+          <span className="text-red-500 text-xs">
+            {typeof errors.status.message === "string" ? errors.status.message : "Error occurred"}
+          </span>
+        )}
         <button 
         className="w-full bg-indigo-600 text-white p-3 rounded-lg mt-2"
         >
