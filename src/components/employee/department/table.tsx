@@ -16,7 +16,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { SetStateAction, useState } from "react";
-import { Department } from "@/interfaces/employee/Department.interface";
+import  Department  from "@/interfaces/employee/Department.interface";
 import Swal from "sweetalert2";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";

@@ -40,7 +40,16 @@ const DataEmployee = () => {
     reset,
     formState: { errors },
   } = useForm();
-  console.log()
+  
+  const onSubmit = handleSubmit(async(data) => {   
+    console.log(data)
+//     const newEmployee = await axios.post('/api/employee/data-employee', data);
+//     reset();
+// if (newEmployee.statusText) {
+//   toast.info("Employee created");
+//   return;
+// }  
+});
 
   const fetchData = async (
     url: string, 
@@ -66,7 +75,7 @@ const DataEmployee = () => {
   
   return (
     <div className="mt-16 flex justify-center items-center">
-      <form className="w-1/4">
+       <form onSubmit={onSubmit} className="w-1/4">
         <h1 className="text-slate-200 font-bold text-4xl mb-4">
           New Employee
         </h1>
