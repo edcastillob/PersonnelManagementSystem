@@ -6,9 +6,10 @@ import Employee from "@/interfaces/employee/Employee.interface";
 export async function POST(request: { json: () => Employee }) {
   const prisma = new PrismaClient();
 
+  const data = await request.json(); 
+
   try {
    
-    const data = await request.json(); 
     const {
       dni,
       fullname,
@@ -25,7 +26,7 @@ export async function POST(request: { json: () => Employee }) {
       end_date: endDateStr,
       id_ubication,
       salary,
-      benefit,
+      id_benefit,
       social_security,
       tax_identification,
       education_level,
@@ -91,11 +92,12 @@ export async function POST(request: { json: () => Employee }) {
     }
 
 
-
+   
     const parseSalary = +salary;
     const birthdate = new Date(birthdateStr);
     const start_date = new Date(start_dateStr);
     const end_date = endDateStr ? new Date(endDateStr) : null;
+    console.log("_____",data)
     const employee = await prisma.employee.create({
       data: {
         dni,
@@ -103,7 +105,7 @@ export async function POST(request: { json: () => Employee }) {
         gender,
         birthdate: birthdate ?? "",
         civil_status,
-        photo,
+        photo : photo ?? " ",
         address,
         phone,
         email,
@@ -113,11 +115,11 @@ export async function POST(request: { json: () => Employee }) {
         end_date,
         id_ubication: +id_ubication,
         salary: parseSalary,
-        benefit,
+        id_benefit: +id_benefit,
         social_security: social_security ?? "",
         tax_identification: tax_identification ?? "",
         education_level: education_level ?? "",
-        educational_degree: educational_degree ?? "",
+        educational_degree: educational_degree ?? "https://avatars.githubusercontent.com/u/127250105?s=96&v=4",
         certifications: certifications ?? "",
         blood_type: blood_type ?? "",
         allergic_to: allergic_to ?? "",
@@ -144,6 +146,7 @@ export async function POST(request: { json: () => Employee }) {
     await prisma.$disconnect();
   }
 }
+
 
 export async function GET() {
   const prisma = new PrismaClient();

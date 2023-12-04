@@ -27,6 +27,7 @@ export default interface Employee {
   id_ubication: number;
   role: Role;
   id_role: number;
+  id_benefit: number;
   salary: number;
   benefit: string;
   social_security?: string;

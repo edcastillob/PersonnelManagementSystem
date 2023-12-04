@@ -23,16 +23,16 @@ const DataEmployee = () => {
   const [benefit, setBenefit] = useState<Benefit[]>([]);
   const [status, setStatus] = useState<Status[]>([]);
 
-  // const { getRootProps, getInputProps } = useDropzone({
-  //   accept: 'image/*',
-  //   onDrop: (acceptedFiles) => {
-  //     // Lógica de carga de Cloudinary
-  //     setUploadedImage({
-  //       url: URL.createObjectURL(acceptedFiles[0]),
-  //       file: acceptedFiles[0],
-  //     });
-  //   },
-  // });
+  const { getRootProps, getInputProps } = useDropzone({
+    accept: 'image/*',
+    onDrop: (acceptedFiles) => {
+      // Lógica de carga de Cloudinary
+      setUploadedImage({
+        url: URL.createObjectURL(acceptedFiles[0]),
+        file: acceptedFiles[0],
+      });
+    },
+  });
   
   const {
     register,
@@ -43,12 +43,12 @@ const DataEmployee = () => {
   
   const onSubmit = handleSubmit(async(data) => {   
     console.log(data)
-//     const newEmployee = await axios.post('/api/employee/data-employee', data);
-//     reset();
-// if (newEmployee.statusText) {
-//   toast.info("Employee created");
-//   return;
-// }  
+    const newEmployee = await axios.post('/api/employee/data-employee', data);
+    if (newEmployee.statusText) {
+      toast.info("Employee created");
+      reset();
+  return;
+}  
 });
 
   const fetchData = async (
@@ -236,7 +236,7 @@ const DataEmployee = () => {
           </span>
         )}
 
-{/* <label htmlFor="photo" className="text-slate-500 mb-2 block">
+ <label htmlFor="photo" className="text-slate-500 mb-2 block">
   <b>Photo</b>
 </label>
 <div {...getRootProps()} className="dropzone">
@@ -261,9 +261,9 @@ const DataEmployee = () => {
     <p>Uploaded Photo:</p>
     <img src={uploadedImage.url} alt="Uploaded" className="w-32 h-32" />
   </div>
-)} */}
+)} 
 
-{/* <label htmlFor="photo" className="text-slate-500 mb-2 block">
+<label htmlFor="photo" className="text-slate-500 mb-2 block">
           <b>Photo</b>
         </label>
         <div {...getRootProps()} className="dropzone">
@@ -275,7 +275,7 @@ const DataEmployee = () => {
             <p>Uploaded Photo:</p>
             <img src={uploadedImage.url} alt="Uploaded" className="w-32 h-32" />
           </div>
-        )} */}
+        )} 
 
 
 <label htmlFor="address" className="text-slate-500 mb-2 block">
@@ -326,7 +326,7 @@ const DataEmployee = () => {
           <b>Department</b>
         </label>
         <select
-          {...register("department", {
+          {...register("id_department", {
             required: {
               value: true,
               message: "Employee department is required",
@@ -351,7 +351,7 @@ const DataEmployee = () => {
           <b>Position</b>
         </label>
         <select
-          {...register("position", {
+          {...register("id_cargo", {
             required: {
               value: true,
               message: "Employee position is required",
@@ -415,7 +415,7 @@ const DataEmployee = () => {
           <b>Ubication</b>
         </label>
         <select
-          {...register("ubication", {
+          {...register("id_ubication", {
             required: {
               value: true,
               message: "Employee ubication is required",
@@ -441,7 +441,7 @@ const DataEmployee = () => {
           <b>Role</b>
         </label>
         <select
-          {...register("role", {
+          {...register("id_role", {
             required: {
               value: true,
               message: "Employee role is required",
@@ -488,7 +488,7 @@ const DataEmployee = () => {
   </span>
 )}
 
-<label htmlFor="benefit" className="text-slate-500 mb-2 block">
+<label htmlFor="id_benefit" className="text-slate-500 mb-2 block">
           <b>Benefit</b>
         </label>
         <select
@@ -707,7 +707,7 @@ const DataEmployee = () => {
           <b>Status</b>
         </label>
         <select
-          {...register("status", {
+          {...register("id_status", {
             required: {
               value: true,
               message: "Employee status is required",
